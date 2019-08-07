@@ -35,13 +35,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
                 String email = campoEmail.getText().toString();
 
                 if(nome.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-                    Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos corretamente!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Aluno alunoCriado = new Aluno(nome, telefone, email);
                     dao.setAluno(alunoCriado);
                     Toast.makeText(FormularioAlunoActivity.this, "Aluno Salvo!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(FormularioAlunoActivity.this, ListaAlunosActivity.class));
+                    finish();
                 }
             }
         });
