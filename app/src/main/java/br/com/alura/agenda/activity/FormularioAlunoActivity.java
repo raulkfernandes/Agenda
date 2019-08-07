@@ -1,5 +1,6 @@
 package br.com.alura.agenda.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         inicializaCampos();
         configuraBotaoSalvar();
+
+        Intent dados = getIntent();
+        Aluno alunoSelecionado = (Aluno) dados.getParcelableExtra("aluno");
+        if(alunoSelecionado != null) {
+            campoNome.setText(alunoSelecionado.getNome());
+            campoTelefone.setText(alunoSelecionado.getTelefone());
+            campoEmail.setText(alunoSelecionado.getEmail());
+        }
     }
 
     private void inicializaCampos() {
