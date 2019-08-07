@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.dao.AlunoDAO;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -21,11 +22,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         setTitle("Lista de Alunos");
 
+        final AlunoDAO dao = new AlunoDAO();
+
         List<String> alunos = new ArrayList<>(Arrays.asList("Eu", "Tu", "Ele"));
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                alunos));
+                dao.getAlunos()));
     }
 }
