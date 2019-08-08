@@ -2,7 +2,6 @@ package br.com.alura.agenda.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
+
+import static br.com.alura.agenda.activity.ConstantesEntreActivities.CHAVE_ALUNO;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -54,18 +55,30 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void inicializaListaDeAlunos() {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
+        configuraAdapter(listaDeAlunos);
+        configuraCliqueNaLista(listaDeAlunos);
+    }
+
+    private void configuraAdapter(ListView listaDeAlunos) {
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 dao.getAlunos()));
+    }
+
+    private void configuraCliqueNaLista(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
-                Aluno alunoSelecionado = dao.findAluno(index);
-                Intent editaFormularioAlunoActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
-                editaFormularioAlunoActivity.putExtra("aluno", alunoSelecionado);
-                startActivity(editaFormularioAlunoActivity);
+                Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
+                editaFormularioAlunoActivity(alunoSelecionado);
             }
         });
+    }
+
+    private void editaFormularioAlunoActivity(Aluno aluno) {
+        Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
+        vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
+        startActivity(vaiParaFormularioActivity);
     }
 }
