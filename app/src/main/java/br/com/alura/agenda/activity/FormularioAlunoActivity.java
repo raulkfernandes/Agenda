@@ -20,6 +20,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefone;
     private EditText campoEmail;
     private final AlunoDAO dao = new AlunoDAO();
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +32,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         configuraBotaoSalvar();
 
         Intent dados = getIntent();
-        Aluno alunoSelecionado = (Aluno) dados.getParcelableExtra("aluno");
-        if(alunoSelecionado != null) {
-            campoNome.setText(alunoSelecionado.getNome());
-            campoTelefone.setText(alunoSelecionado.getTelefone());
-            campoEmail.setText(alunoSelecionado.getEmail());
+        if(dados.hasExtra("aluno")) {
+            aluno = (Aluno) dados.getParcelableExtra("aluno");
+            campoNome.setText(aluno.getNome());
+            campoTelefone.setText(aluno.getTelefone());
+            campoEmail.setText(aluno.getEmail());
+        }
+        else {
+            aluno = new Aluno();
         }
     }
 
@@ -50,30 +54,38 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Aluno alunoCriado = criaAluno();
-                if(alunoCriado != null) {
-                    salvaAluno(alunoCriado);
+                preencheAluno();
+                if(checaCamposVazios()) {
+                    Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                }
+                else if(aluno.hasValidId()) {
+                    Toast.makeText(FormularioAlunoActivity.this, "Informações atualizadas!", Toast.LENGTH_SHORT).show();
+                    dao.editAluno(aluno);
+                    finish();
+                }
+                else {
+                    Toast.makeText(FormularioAlunoActivity.this, "Informações salvas!", Toast.LENGTH_SHORT).show();
+                    dao.saveAluno(aluno);
+                    finish();
                 }
             }
         });
     }
 
-    private Aluno criaAluno() {
+    private void preencheAluno() {
         String nome = campoNome.getText().toString();
         String telefone = campoTelefone.getText().toString();
         String email = campoEmail.getText().toString();
 
-        if(nome.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-            Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
-            return null;
-        }
-
-        return new Aluno(nome, telefone, email);
+        aluno.setNome(nome);
+        aluno.setTelefone(telefone);
+        aluno.setEmail(email);
     }
 
-    private void salvaAluno(Aluno alunoCriado) {
-        dao.setAluno(alunoCriado);
-        Toast.makeText(FormularioAlunoActivity.this, "Aluno salvo!", Toast.LENGTH_SHORT).show();
-        finish();
+    private boolean checaCamposVazios() {
+        if(campoNome.getText().toString().isEmpty() || campoNome.getText().toString().isEmpty() || campoNome.getText().toString().isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package br.com.alura.agenda.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,7 +49,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void abreFormularioAlunoActivity() {
-    startActivity(new Intent(this, FormularioAlunoActivity.class));
+        startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
 
     private void inicializaListaDeAlunos() {
