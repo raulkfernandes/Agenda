@@ -10,25 +10,11 @@ public class AlunoDAO {
     private final static List<Aluno> alunos = new ArrayList<>();
     private static int idCount = 1;
 
-    public void saveAluno(Aluno aluno) {
-        aluno.setId(idCount);
-        alunos.add(aluno);
-        atualizaId();
-    }
-
     private void atualizaId() {
         idCount++;
     }
 
-    public void editAluno(Aluno alunoSelecionado) {
-        Aluno aluno = checkAlunoById(alunoSelecionado);
-        if(aluno != null) {
-            int posicaoAluno = alunos.indexOf(aluno);
-            alunos.set(posicaoAluno, alunoSelecionado);
-        }
-    }
-
-    private Aluno checkAlunoById(Aluno alunoSelecionado) {
+    private Aluno checaAlunoPeloId(Aluno alunoSelecionado) {
         for (Aluno aluno : alunos) {
             if(aluno.getId() == alunoSelecionado.getId()) {
                 return aluno;
@@ -37,7 +23,28 @@ public class AlunoDAO {
         return null;
     }
 
-    public List<Aluno> getAlunos() {
+    public void salvaAluno(Aluno aluno) {
+        aluno.setId(idCount);
+        alunos.add(aluno);
+        atualizaId();
+    }
+
+    public void removeAluno(Aluno alunoSelecionado) {
+        Aluno aluno = checaAlunoPeloId(alunoSelecionado);
+        if(aluno != null) {
+            alunos.remove(aluno);
+        }
+    }
+
+    public void editaAluno(Aluno alunoSelecionado) {
+        Aluno aluno = checaAlunoPeloId(alunoSelecionado);
+        if(aluno != null) {
+            int posicaoAluno = alunos.indexOf(aluno);
+            alunos.set(posicaoAluno, alunoSelecionado);
+        }
+    }
+
+    public List<Aluno> getListaDeAlunos() {
         return new ArrayList<>(alunos);
     }
 }

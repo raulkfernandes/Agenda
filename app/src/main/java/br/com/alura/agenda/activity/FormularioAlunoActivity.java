@@ -77,12 +77,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         }
         else if(aluno.hasValidId()) {
             Toast.makeText(FormularioAlunoActivity.this, "Informações atualizadas!", Toast.LENGTH_SHORT).show();
-            dao.editAluno(aluno);
+            dao.editaAluno(aluno);
             finish();
         }
         else {
             Toast.makeText(FormularioAlunoActivity.this, "Informações salvas!", Toast.LENGTH_SHORT).show();
-            dao.saveAluno(aluno);
+            dao.salvaAluno(aluno);
             finish();
         }
     }

@@ -22,6 +22,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private static final String TITULO_APPBAR = "Lista de alunos";
     private final AlunoDAO dao = new AlunoDAO();
+    private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +58,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         configuraAdapter(listaDeAlunos);
         configuraCliqueNaLista(listaDeAlunos);
+        configuraCliqueLongoNaLista(listaDeAlunos);
     }
 
     private void configuraAdapter(ListView listaDeAlunos) {
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(
+        adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                dao.getAlunos()));
+                dao.getListaDeAlunos());
+        listaDeAlunos.setAdapter(adapter);
     }
 
     private void configuraCliqueNaLista(ListView listaDeAlunos) {
@@ -72,6 +75,18 @@ public class ListaAlunosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
                 Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
                 editaFormularioAlunoActivity(alunoSelecionado);
+            }
+        });
+    }
+
+    private void configuraCliqueLongoNaLista(ListView listaDeAlunos) {
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int index, long id) {
+                Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
+                dao.removeAluno(alunoSelecionado);
+                adapter.remove(alunoSelecionado);
+                return true;
             }
         });
     }
