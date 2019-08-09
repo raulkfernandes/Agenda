@@ -29,15 +29,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
-
         configuraFabNovoAluno();
+        configuraListaDeAlunos();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        atualizaListaDeAlunos();
+    }
 
-        inicializaListaDeAlunos();
+    private void atualizaListaDeAlunos() {
+        adapter.clear();
+        adapter.addAll(dao.getListaDeAlunos());
     }
 
     private void configuraFabNovoAluno() {
@@ -54,7 +58,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
 
-    private void inicializaListaDeAlunos() {
+    private void configuraListaDeAlunos() {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         configuraAdapter(listaDeAlunos);
         configuraCliqueNaLista(listaDeAlunos);
@@ -62,10 +66,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaDeAlunos) {
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                dao.getListaDeAlunos());
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDeAlunos.setAdapter(adapter);
     }
 
@@ -79,21 +80,25 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
     }
 
+    private void editaFormularioAlunoActivity(Aluno aluno) {
+        Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
+        vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
+        startActivity(vaiParaFormularioActivity);
+    }
+
     private void configuraCliqueLongoNaLista(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int index, long id) {
                 Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
-                dao.removeAluno(alunoSelecionado);
-                adapter.remove(alunoSelecionado);
+                removeAluno(alunoSelecionado);
                 return true;
             }
         });
     }
 
-    private void editaFormularioAlunoActivity(Aluno aluno) {
-        Intent vaiParaFormularioActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
-        vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
-        startActivity(vaiParaFormularioActivity);
+    private void removeAluno(Aluno aluno) {
+        dao.removeAluno(aluno);
+        adapter.remove(aluno);
     }
 }
