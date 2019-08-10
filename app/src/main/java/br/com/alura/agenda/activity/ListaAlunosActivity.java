@@ -2,7 +2,6 @@ package br.com.alura.agenda.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,13 +50,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        configuraMenuDeContexto(item);
+        return super.onContextItemSelected(item);
+    }
+
+    private void configuraMenuDeContexto(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
         int itemId = item.getItemId();
         if(itemId == R.id.activity_lista_alunos_menu_remover) {
             removeAluno(alunoEscolhido);
         }
-        return super.onContextItemSelected(item);
     }
 
     private void atualizaListaDeAlunos() {
