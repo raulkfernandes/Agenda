@@ -25,7 +25,6 @@ import static br.com.alura.agenda.activity.ConstantesEntreActivities.CHAVE_ALUNO
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private static final String TITULO_APPBAR = "Lista de alunos";
-    private static final String MENU_CONTEXTO_REMOVER = "Remover";
     private final AlunoDAO dao = new AlunoDAO();
     private ArrayAdapter<Aluno> adapter;
 
@@ -47,14 +46,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(MENU_CONTEXTO_REMOVER);
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-        if(item.getTitle().toString().equals(MENU_CONTEXTO_REMOVER)) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_lista_alunos_menu_remover) {
             removeAluno(alunoEscolhido);
         }
         return super.onContextItemSelected(item);
