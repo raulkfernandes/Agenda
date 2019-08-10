@@ -50,11 +50,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        configuraMenuDeContexto(item);
+        configuraContextMenu(item);
         return super.onContextItemSelected(item);
     }
 
-    private void configuraMenuDeContexto(@NonNull MenuItem item) {
+    private void configuraContextMenu(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
         int itemId = item.getItemId();
