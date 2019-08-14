@@ -64,8 +64,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizaListaDeAlunos() {
-        adapter.clear();
-        adapter.addAll(dao.getListaDeAlunos());
+        adapter.atualiza(dao.getListaDeAlunos());
     }
 
     private void configuraFabNovoAluno() {

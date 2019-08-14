@@ -39,31 +39,32 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     @Override
     public View getView(int posicao, View view, ViewGroup viewGroup) {
-        View viewCriada = LayoutInflater.from(mContext).inflate(R.layout.item_aluno, viewGroup, false);
-        Aluno currentAluno = alunos.get(posicao);
+        View novaView = criaView(viewGroup);
+        Aluno novoAluno = this.alunos.get(posicao);
+        vincula(novaView, novoAluno);
+        return novaView;
+    }
 
-        TextView nome = viewCriada.findViewById(R.id.item_aluno_nome);
-        nome.setText(currentAluno.getNome());
+    private View criaView(ViewGroup viewGroup) {
+        return LayoutInflater.from(mContext).inflate(R.layout.item_aluno, viewGroup, false);
+    }
 
-        TextView telefone = viewCriada.findViewById(R.id.item_aluno_telefone);
-        telefone.setText(currentAluno.getTelefone());
-
-        return viewCriada;
+    private void vincula(View view, Aluno aluno) {
+        TextView nome = view.findViewById(R.id.item_aluno_nome);
+        nome.setText(aluno.getNome());
+        TextView telefone = view.findViewById(R.id.item_aluno_telefone);
+        telefone.setText(aluno.getTelefone());
     }
 
     // Encapsulando métodos para que o adapter se encarregue dessas tarefas:
-    public void clear() {
-        alunos.clear();
-        notificaAdapter();
-    }
-
-    public void addAll(List<Aluno> alunos) {
+    public void atualiza(List<Aluno> alunos) {
+        this.alunos.clear();
         this.alunos.addAll(alunos);
         notificaAdapter();
     }
 
     public void remove(Aluno aluno) {
-        alunos.remove(aluno);
+        this.alunos.remove(aluno);
         notificaAdapter();
     }
 
