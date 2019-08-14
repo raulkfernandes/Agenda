@@ -1,5 +1,7 @@
 package br.com.alura.agenda.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -55,12 +57,27 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraContextMenu(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
         int itemId = item.getItemId();
         if(itemId == R.id.activity_lista_alunos_menu_remover) {
-            removeAluno(alunoEscolhido);
+            confirmaRemoverAluno(item);
         }
+    }
+
+    private void confirmaRemoverAluno(@NonNull final MenuItem item) {
+        new AlertDialog
+                .Builder(this)
+                .setTitle("Removendo aluno")
+                .setMessage("Tem certeza que quer remover o aluno?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+                        removeAluno(alunoEscolhido);
+                    }
+                })
+                .setNegativeButton("Não", null)
+                .show();
     }
 
     private void atualizaListaDeAlunos() {
