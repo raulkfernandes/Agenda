@@ -1,4 +1,4 @@
-package br.com.alura.agenda.adapter;
+package br.com.alura.agenda.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
-import br.com.alura.agenda.adapter.ListaAlunosAdapter;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
 
