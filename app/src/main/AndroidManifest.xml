@@ -13,7 +13,7 @@
         tools:ignore="AllowBackup">
 
         <activity
-            android:name=".activity.ListaAlunosActivity"
+            android:name=".ui.activity.ListaAlunosActivity"
             android:label="Lista de Alunos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".activity.FormularioAlunoActivity"
+            android:name=".ui.activity.FormularioAlunoActivity"
             android:label="Formulario Aluno">
         </activity>
 

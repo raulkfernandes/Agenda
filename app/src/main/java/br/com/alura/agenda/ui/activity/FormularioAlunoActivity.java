@@ -1,4 +1,4 @@
-package br.com.alura.agenda.activity;
+package br.com.alura.agenda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import br.com.alura.agenda.R;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
 
-import static br.com.alura.agenda.activity.ConstantesEntreActivities.CHAVE_ALUNO;
+import static br.com.alura.agenda.ui.activity.ConstantesEntreActivities.CHAVE_ALUNO;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
