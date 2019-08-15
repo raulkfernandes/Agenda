@@ -1,7 +1,6 @@
 package br.com.alura.agenda.activity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -68,13 +67,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 .Builder(this)
                 .setTitle("Removendo aluno")
                 .setMessage("Tem certeza que quer remover o aluno?")
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-                        removeAluno(alunoEscolhido);
-                    }
+                .setPositiveButton("Sim", (dialogInterface, i) -> {
+                    AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                    Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+                    removeAluno(alunoEscolhido);
                 })
                 .setNegativeButton("Não", null)
                 .show();
@@ -86,12 +82,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraFabNovoAluno() {
         FloatingActionButton fabNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
-        fabNovoAluno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                abreFormularioAlunoActivity();
-            }
-        });
+        fabNovoAluno.setOnClickListener(view -> abreFormularioAlunoActivity());
     }
 
     private void abreFormularioAlunoActivity() {
@@ -111,12 +102,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraCliqueNaLista(ListView listaDeAlunos) {
-        listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
-                Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
-                editaFormularioAlunoActivity(alunoSelecionado);
-            }
+        listaDeAlunos.setOnItemClickListener((adapterView, view, index, id) -> {
+            Aluno alunoSelecionado = (Aluno) adapterView.getItemAtPosition(index);
+            editaFormularioAlunoActivity(alunoSelecionado);
         });
     }
 

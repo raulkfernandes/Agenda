@@ -54,7 +54,7 @@ public class Aluno implements Parcelable {
     }
 
     // Implementing Parcelable interface
-    protected Aluno(Parcel in) {
+    private Aluno(Parcel in) {
         id = in.readInt();
         nome = in.readString();
         telefone = in.readString();

@@ -105,9 +105,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private boolean checaCamposVazios() {
-        if(campoNome.getText().toString().isEmpty() || campoTelefone.getText().toString().isEmpty() || campoEmail.getText().toString().isEmpty()) {
-            return true;
-        }
-        return false;
+        return campoNome.getText().toString().isEmpty() || campoTelefone.getText().toString().isEmpty() || campoEmail.getText().toString().isEmpty();
     }
 }

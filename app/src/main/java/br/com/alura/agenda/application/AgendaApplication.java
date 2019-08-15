@@ -5,9 +5,10 @@ import android.app.Application;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.model.Aluno;
 
+@SuppressWarnings("WeakerAccess")
 public class AgendaApplication extends Application {
 
-    AlunoDAO dao = new AlunoDAO();
+    private final AlunoDAO dao = new AlunoDAO();
 
     @Override
     public void onCreate() {
