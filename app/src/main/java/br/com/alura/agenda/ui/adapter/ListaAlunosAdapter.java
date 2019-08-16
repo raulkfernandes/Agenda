@@ -49,7 +49,6 @@ public class ListaAlunosAdapter extends BaseAdapter {
             novaView = convertView;
             viewHolder = (ListaAlunosViewHolder) novaView.getTag();
         }
-
         Aluno novoAluno = this.alunos.get(posicao);
         vincula(viewHolder, novoAluno);
         return novaView;
