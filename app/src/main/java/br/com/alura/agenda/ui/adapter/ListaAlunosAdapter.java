@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +37,31 @@ public class ListaAlunosAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int posicao, View view, ViewGroup viewGroup) {
-        View novaView = criaView(viewGroup);
+    public View getView(int posicao, View convertView, ViewGroup parentView) {
+        View novaView;
+        ListaAlunosViewHolder viewHolder;
+        if(convertView == null) {
+            novaView = criaView(parentView);
+            viewHolder = new ListaAlunosViewHolder(novaView);
+            novaView.setTag(viewHolder);
+        }
+        else {
+            novaView = convertView;
+            viewHolder = (ListaAlunosViewHolder) novaView.getTag();
+        }
+
         Aluno novoAluno = this.alunos.get(posicao);
-        vincula(novaView, novoAluno);
+        vincula(viewHolder, novoAluno);
         return novaView;
     }
 
-    private View criaView(ViewGroup viewGroup) {
-        return LayoutInflater.from(mContext).inflate(R.layout.item_aluno, viewGroup, false);
+    private View criaView(ViewGroup parentView) {
+        return LayoutInflater.from(mContext).inflate(R.layout.item_aluno, parentView, false);
     }
 
-    private void vincula(View view, Aluno aluno) {
-        TextView nome = view.findViewById(R.id.item_aluno_nome);
-        nome.setText(aluno.getNome());
-        TextView telefone = view.findViewById(R.id.item_aluno_telefone);
-        telefone.setText(aluno.getTelefone());
+    private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
+        viewHolder.setTextNome(aluno.getNome());
+        viewHolder.setTextTelefone(aluno.getTelefone());
     }
 
     // Encapsulando métodos para que o adapter se encarregue dessas tarefas:
