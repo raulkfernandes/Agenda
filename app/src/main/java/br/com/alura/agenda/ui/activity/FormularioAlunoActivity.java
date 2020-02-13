@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.database.AgendaDatabase;
@@ -32,7 +31,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-        
+
         dao = AgendaDatabase.getInstance(this).getRoomAlunoDAO();
         inicializaCampos();
         carregaAluno();
