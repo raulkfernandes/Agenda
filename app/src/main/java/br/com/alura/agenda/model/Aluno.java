@@ -1,6 +1,5 @@
 package br.com.alura.agenda.model;
 
-import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -49,7 +48,6 @@ public class Aluno implements Parcelable {
         return id > 0;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return nome;
