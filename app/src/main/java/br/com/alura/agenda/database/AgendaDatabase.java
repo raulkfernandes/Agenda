@@ -13,13 +13,17 @@ import br.com.alura.agenda.model.Aluno;
 public abstract class AgendaDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "agenda.db";
+    private static AgendaDatabase instance;
 
     public abstract RoomAlunoDAO getRoomAlunoDAO();
 
     public static AgendaDatabase getInstance(Context mContext) {
-        return Room
-                .databaseBuilder(mContext, AgendaDatabase.class, DATABASE_NAME)
-                .allowMainThreadQueries()
-                .build();
+        if(instance == null) {
+            instance = Room
+                    .databaseBuilder(mContext, AgendaDatabase.class, DATABASE_NAME)
+                    .allowMainThreadQueries()
+                    .build();
+        }
+            return instance;
     }
 }
