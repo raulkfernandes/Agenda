@@ -3,24 +3,32 @@ package br.com.alura.agenda.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Aluno implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String nome;
     private String telefone;
     private String email;
 
-    // Constructors
+    @Ignore
     public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
     }
 
-    public Aluno() { }
+    public Aluno() {
+    }
 
-    // Getters
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;
@@ -34,16 +42,22 @@ public class Aluno implements Parcelable {
         return email;
     }
 
-    // Setters
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setNome(String nome) { this.nome = nome; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public void setTelefone(String telefone) { this.telefone = telefone; }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    // Model Methods
     public boolean hasValidId() {
         return id > 0;
     }
