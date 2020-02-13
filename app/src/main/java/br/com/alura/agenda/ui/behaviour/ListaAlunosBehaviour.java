@@ -7,21 +7,27 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.room.Room;
 
-import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
-import br.com.alura.agenda.dao.AlunoDAO;
+import br.com.alura.agenda.database.AgendaDatabase;
+import br.com.alura.agenda.database.dao.RoomAlunoDAO;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class ListaAlunosBehaviour {
 
     private final Context mContext;
     private final ListaAlunosAdapter adapter;
-    private final AlunoDAO dao;
+    private final RoomAlunoDAO dao;
 
     public ListaAlunosBehaviour(Context mContext) {
         this.mContext = mContext;
         this.adapter = new ListaAlunosAdapter(this.mContext);
-        this.dao = new AlunoDAO();
+        this.dao = Room
+                .databaseBuilder(mContext, AgendaDatabase.class, "agenda.db")
+                .allowMainThreadQueries()
+                .build()
+                .getRoomAlunoDAO();
     }
 
     public void confirmaRemoverAluno(@NonNull final MenuItem item) {
