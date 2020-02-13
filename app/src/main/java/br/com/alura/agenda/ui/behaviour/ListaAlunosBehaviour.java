@@ -22,12 +22,8 @@ public class ListaAlunosBehaviour {
 
     public ListaAlunosBehaviour(Context mContext) {
         this.mContext = mContext;
-        this.adapter = new ListaAlunosAdapter(this.mContext);
-        this.dao = Room
-                .databaseBuilder(mContext, AgendaDatabase.class, "agenda.db")
-                .allowMainThreadQueries()
-                .build()
-                .getRoomAlunoDAO();
+        this.adapter = new ListaAlunosAdapter(mContext);
+        this.dao = AgendaDatabase.getInstance(mContext).getRoomAlunoDAO();
     }
 
     public void confirmaRemoverAluno(@NonNull final MenuItem item) {
