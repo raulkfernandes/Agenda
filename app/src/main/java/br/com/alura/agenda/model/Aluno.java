@@ -13,27 +13,17 @@ public class Aluno implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String nome;
-    private String sobrenome;
     private String telefone;
     private String email;
 
     @Ignore
-    public Aluno(String nome, String sobrenome, String telefone, String email) {
+    public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
-        this.sobrenome = sobrenome;
         this.telefone = telefone;
         this.email = email;
     }
 
     public Aluno() {
-    }
-
-    public String getSobrenome() {
-        return sobrenome;
-    }
-
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
     }
 
     public int getId() {
@@ -74,14 +64,13 @@ public class Aluno implements Parcelable {
 
     @Override
     public String toString() {
-        return nome + " " + sobrenome;
+        return nome;
     }
 
     // Implementing Parcelable interface
     private Aluno(Parcel in) {
         id = in.readInt();
         nome = in.readString();
-        sobrenome = in.readString();
         telefone = in.readString();
         email = in.readString();
     }
@@ -107,7 +96,6 @@ public class Aluno implements Parcelable {
     public void writeToParcel(Parcel parcel, int index) {
         parcel.writeInt(id);
         parcel.writeString(nome);
-        parcel.writeString(sobrenome);
         parcel.writeString(telefone);
         parcel.writeString(email);
     }
