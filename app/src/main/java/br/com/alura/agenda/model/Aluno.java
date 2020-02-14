@@ -81,6 +81,7 @@ public class Aluno implements Parcelable {
     private Aluno(Parcel in) {
         id = in.readInt();
         nome = in.readString();
+        sobrenome = in.readString();
         telefone = in.readString();
         email = in.readString();
     }
@@ -106,6 +107,7 @@ public class Aluno implements Parcelable {
     public void writeToParcel(Parcel parcel, int index) {
         parcel.writeInt(id);
         parcel.writeString(nome);
+        parcel.writeString(sobrenome);
         parcel.writeString(telefone);
         parcel.writeString(email);
     }

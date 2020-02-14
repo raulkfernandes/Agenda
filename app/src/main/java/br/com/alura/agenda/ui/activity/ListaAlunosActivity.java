@@ -2,6 +2,7 @@ package br.com.alura.agenda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,10 +63,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraFabNovoAluno() {
         FloatingActionButton fabNovoAluno = findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
-        fabNovoAluno.setOnClickListener(view -> abreFormularioAlunoActivity());
+        fabNovoAluno.setOnClickListener(view -> insereFormularioAlunoActivity());
     }
 
-    private void abreFormularioAlunoActivity() {
+    private void insereFormularioAlunoActivity() {
         startActivity(new Intent(this, FormularioAlunoActivity.class));
     }
 
