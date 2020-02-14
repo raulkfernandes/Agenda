@@ -59,7 +59,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
     }
 
     private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
-        viewHolder.setTextNome(aluno.getNome());
+        viewHolder.setTextNome(aluno.getNome() + " " + aluno.getDataDeCadastro());
         viewHolder.setTextTelefone(aluno.getTelefone());
     }
 

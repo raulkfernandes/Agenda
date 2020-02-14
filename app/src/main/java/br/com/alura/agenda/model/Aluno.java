@@ -7,6 +7,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 @Entity
 public class Aluno implements Parcelable {
 
@@ -15,6 +18,7 @@ public class Aluno implements Parcelable {
     private String nome;
     private String telefone;
     private String email;
+    private Calendar momentoDeCadastro = Calendar.getInstance();
 
     @Ignore
     public Aluno(String nome, String telefone, String email) {
@@ -24,6 +28,14 @@ public class Aluno implements Parcelable {
     }
 
     public Aluno() {
+    }
+
+    public Calendar getMomentoDeCadastro() {
+        return momentoDeCadastro;
+    }
+
+    public void setMomentoDeCadastro(Calendar momentoDeCadastro) {
+        this.momentoDeCadastro = momentoDeCadastro;
     }
 
     public int getId() {
@@ -67,12 +79,20 @@ public class Aluno implements Parcelable {
         return nome;
     }
 
+
+    public String getDataDeCadastro() {
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        return formatador.format(momentoDeCadastro.getTime());
+    }
+
+
     // Implementing Parcelable interface
     private Aluno(Parcel in) {
         id = in.readInt();
         nome = in.readString();
         telefone = in.readString();
         email = in.readString();
+        momentoDeCadastro = (Calendar) in.readSerializable();
     }
 
     public static final Creator<Aluno> CREATOR = new Creator<Aluno>() {
@@ -98,5 +118,6 @@ public class Aluno implements Parcelable {
         parcel.writeString(nome);
         parcel.writeString(telefone);
         parcel.writeString(email);
+        parcel.writeSerializable(momentoDeCadastro);
     }
 }
