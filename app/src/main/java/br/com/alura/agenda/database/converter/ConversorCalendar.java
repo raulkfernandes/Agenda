@@ -8,15 +8,18 @@ public class ConversorCalendar {
 
     @TypeConverter
     public Long toLong(Calendar valor) {
-        return valor.getTimeInMillis();
+        if (valor != null) {
+            return valor.getTimeInMillis();
+        }
+        return null;
     }
 
     @TypeConverter
     public Calendar toCalendar(Long valor) {
         Calendar momentoAtual = Calendar.getInstance();
-        if(valor != null) {
+        if (valor != null) {
             momentoAtual.setTimeInMillis(valor);
         }
-        return  momentoAtual;
+        return momentoAtual;
     }
 }

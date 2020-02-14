@@ -4,10 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Entity
@@ -19,13 +17,6 @@ public class Aluno implements Parcelable {
     private String telefone;
     private String email;
     private Calendar momentoDeCadastro = Calendar.getInstance();
-
-    @Ignore
-    public Aluno(String nome, String telefone, String email) {
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-    }
 
     public Aluno() {
     }
@@ -74,17 +65,10 @@ public class Aluno implements Parcelable {
         return id > 0;
     }
 
-    @Override
-    public String toString() {
-        return nome;
-    }
-
-
-    public String getDataDeCadastro() {
-        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
-        return formatador.format(momentoDeCadastro.getTime());
-    }
-
+//    public String getDataDeCadastro() {
+//        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+//        return formatador.format(momentoDeCadastro.getTime());
+//    }
 
     // Implementing Parcelable interface
     private Aluno(Parcel in) {

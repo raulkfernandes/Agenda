@@ -16,7 +16,7 @@ public class AlunoDAO {
 
     private Aluno checaAlunoPeloId(Aluno alunoSelecionado) {
         for (Aluno aluno : alunos) {
-            if(aluno.getId() == alunoSelecionado.getId()) {
+            if (aluno.getId() == alunoSelecionado.getId()) {
                 return aluno;
             }
         }
@@ -31,14 +31,14 @@ public class AlunoDAO {
 
     public void removeAluno(Aluno alunoSelecionado) {
         Aluno aluno = checaAlunoPeloId(alunoSelecionado);
-        if(aluno != null) {
+        if (aluno != null) {
             alunos.remove(aluno);
         }
     }
 
     public void editaAluno(Aluno alunoSelecionado) {
         Aluno aluno = checaAlunoPeloId(alunoSelecionado);
-        if(aluno != null) {
+        if (aluno != null) {
             int posicaoAluno = alunos.indexOf(aluno);
             alunos.set(posicaoAluno, alunoSelecionado);
         }

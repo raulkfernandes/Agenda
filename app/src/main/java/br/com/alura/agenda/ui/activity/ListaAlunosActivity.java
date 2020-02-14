@@ -55,7 +55,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraContextMenu(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if(itemId == R.id.activity_lista_alunos_menu_remover) {
+        if (itemId == R.id.activity_lista_alunos_menu_remover) {
             listaAlunosBehaviour.confirmaRemoverAluno(item);
         }
     }

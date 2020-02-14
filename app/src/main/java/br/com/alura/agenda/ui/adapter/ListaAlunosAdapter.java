@@ -40,12 +40,11 @@ public class ListaAlunosAdapter extends BaseAdapter {
     public View getView(int posicao, View convertView, ViewGroup parentView) {
         View novaView;
         ListaAlunosViewHolder viewHolder;
-        if(convertView == null) {
+        if (convertView == null) {
             novaView = criaView(parentView);
             viewHolder = new ListaAlunosViewHolder(novaView);
             novaView.setTag(viewHolder);
-        }
-        else {
+        } else {
             novaView = convertView;
             viewHolder = (ListaAlunosViewHolder) novaView.getTag();
         }
@@ -59,7 +58,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
     }
 
     private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
-        viewHolder.setTextNome(aluno.getNome() + " " + aluno.getDataDeCadastro());
+        viewHolder.setTextNome(aluno.getNome());
         viewHolder.setTextTelefone(aluno.getTelefone());
     }
 
