@@ -7,7 +7,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
-import java.util.List;
 
 @Entity
 public class Aluno implements Parcelable {
@@ -17,7 +16,6 @@ public class Aluno implements Parcelable {
     private String nome;
     private String email;
     private Calendar momentoDeCadastro = Calendar.getInstance();
-    private List<Telefone> telefones;
 
     public Aluno() {
     }
@@ -28,14 +26,6 @@ public class Aluno implements Parcelable {
 
     public void setMomentoDeCadastro(Calendar momentoDeCadastro) {
         this.momentoDeCadastro = momentoDeCadastro;
-    }
-
-    public List<Telefone> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(List<Telefone> telefones) {
-        this.telefones = telefones;
     }
 
     public int getId() {
