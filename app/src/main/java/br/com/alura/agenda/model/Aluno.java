@@ -7,6 +7,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
+import java.util.List;
 
 @Entity
 public class Aluno implements Parcelable {
@@ -14,10 +15,9 @@ public class Aluno implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String nome;
-    private String telefoneFixo;
-    private String telefoneCelular;
     private String email;
     private Calendar momentoDeCadastro = Calendar.getInstance();
+    private List<Telefone> telefones;
 
     public Aluno() {
     }
@@ -30,20 +30,20 @@ public class Aluno implements Parcelable {
         this.momentoDeCadastro = momentoDeCadastro;
     }
 
+    public List<Telefone> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<Telefone> telefones) {
+        this.telefones = telefones;
+    }
+
     public int getId() {
         return id;
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public String getTelefoneFixo() {
-        return telefoneFixo;
-    }
-
-    public String getTelefoneCelular() {
-        return telefoneCelular;
     }
 
     public String getEmail() {
@@ -56,14 +56,6 @@ public class Aluno implements Parcelable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public void setTelefoneFixo(String telefoneFixo) {
-        this.telefoneFixo = telefoneFixo;
-    }
-
-    public void setTelefoneCelular(String telefoneCelular) {
-        this.telefoneCelular = telefoneCelular;
     }
 
     public void setEmail(String email) {
@@ -84,8 +76,6 @@ public class Aluno implements Parcelable {
     private Aluno(Parcel in) {
         id = in.readInt();
         nome = in.readString();
-        telefoneFixo = in.readString();
-        telefoneCelular = in.readString();
         email = in.readString();
         momentoDeCadastro = (Calendar) in.readSerializable();
     }
@@ -111,8 +101,6 @@ public class Aluno implements Parcelable {
     public void writeToParcel(Parcel parcel, int index) {
         parcel.writeInt(id);
         parcel.writeString(nome);
-        parcel.writeString(telefoneFixo);
-        parcel.writeString(telefoneCelular);
         parcel.writeString(email);
         parcel.writeSerializable(momentoDeCadastro);
     }
