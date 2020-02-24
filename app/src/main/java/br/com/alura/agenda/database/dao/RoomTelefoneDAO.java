@@ -1,6 +1,7 @@
 package br.com.alura.agenda.database.dao;
 
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 import br.com.alura.agenda.model.Telefone;
@@ -15,4 +16,7 @@ public interface RoomTelefoneDAO {
 //            "LIMIT 1")
     @Query("SELECT * FROM Telefone WHERE alunoId = :alunoId LIMIT 1")
     Telefone buscaPrimeiroTelefone(int alunoId);
+
+    @Insert
+    void salvaTelefone(Telefone... telefones);
 }

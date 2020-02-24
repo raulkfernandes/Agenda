@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import br.com.alura.agenda.R;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.RoomAlunoDAO;
+import br.com.alura.agenda.database.dao.RoomTelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
+import br.com.alura.agenda.model.Telefone;
+import br.com.alura.agenda.model.TipoTelefone;
 
 import static br.com.alura.agenda.ui.activity.ConstantesEntreActivities.CHAVE_ALUNO;
 
@@ -25,7 +28,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefoneFixo;
     private EditText campoTelefoneCelular;
     private EditText campoEmail;
-    private RoomAlunoDAO dao;
+    private RoomAlunoDAO alunoDAO;
+    private RoomTelefoneDAO telefoneDAO;
     private Aluno aluno;
 
     @Override
@@ -33,7 +37,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
 
-        dao = AgendaDatabase.getInstance(this).getRoomAlunoDAO();
+        alunoDAO = AgendaDatabase.getInstance(this).getRoomAlunoDAO();
+        telefoneDAO = AgendaDatabase.getInstance(this).getRoomTelefoneDAO();
         inicializaCampos();
         carregaAluno();
     }
@@ -88,11 +93,17 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
         } else if (aluno.hasValidId()) {
             Toast.makeText(FormularioAlunoActivity.this, "Informações atualizadas!", Toast.LENGTH_SHORT).show();
-            dao.editaAluno(aluno);
+            alunoDAO.editaAluno(aluno);
             finish();
         } else {
             Toast.makeText(FormularioAlunoActivity.this, "Informações salvas!", Toast.LENGTH_SHORT).show();
-            dao.salvaAluno(aluno);
+            int alunoId = alunoDAO.salvaAluno(aluno).intValue();
+            String numeroFixo = campoTelefoneFixo.getText().toString();
+            Telefone telefoneFixo = new Telefone(numeroFixo, TipoTelefone.FIXO, alunoId);
+            String numeroCelular = campoTelefoneCelular.getText().toString();
+            Telefone telefoneCelular = new Telefone(numeroCelular, TipoTelefone.CELULAR, alunoId);
+            telefoneDAO.salvaTelefone(telefoneFixo, telefoneCelular);
+
             finish();
         }
     }
