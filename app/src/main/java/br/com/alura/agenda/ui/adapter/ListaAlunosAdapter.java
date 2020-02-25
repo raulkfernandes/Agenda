@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.asynctask.BuscaPrimeiroTelefoneTask;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.RoomTelefoneDAO;
 import br.com.alura.agenda.model.Aluno;
-import br.com.alura.agenda.model.Telefone;
 
 public class ListaAlunosAdapter extends BaseAdapter {
 
@@ -64,10 +64,7 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
         viewHolder.setTextNome(aluno.getNome());
-//        Telefone primeiroTelefone = telefoneDAO.buscaPrimeiroTelefone(aluno.getId());
-//        if(primeiroTelefone != null) {
-//            viewHolder.setTextTelefone(primeiroTelefone.getNumero());
-//        }
+        new BuscaPrimeiroTelefoneTask(telefoneDAO, viewHolder, aluno.getId()).execute();
     }
 
     // Encapsulando métodos para que o adapter se encarregue dessas tarefas:

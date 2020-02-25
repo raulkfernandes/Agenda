@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import br.com.alura.agenda.R;
 
-class ListaAlunosViewHolder {
+public class ListaAlunosViewHolder {
     private final TextView nome;
     private final TextView telefone;
 
@@ -18,7 +18,7 @@ class ListaAlunosViewHolder {
         this.nome.setText(nomeAluno);
     }
 
-    void setTextTelefone(String telefoneAluno) {
+    public void setTextTelefone(String telefoneAluno) {
         this.telefone.setText(telefoneAluno);
     }
 }
