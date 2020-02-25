@@ -85,6 +85,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheCampos() {
         campoNome.setText(aluno.getNome());
+        campoEmail.setText(aluno.getEmail());
+        preencheCamposTelefone();
+    }
+
+    private void preencheCamposTelefone() {
         telefonesDoAluno = telefoneDAO.buscaTodosTelefones(aluno.getId());
         for (Telefone telefone : telefonesDoAluno) {
             if (telefone.getTipo() == TipoTelefone.FIXO) {
@@ -93,42 +98,54 @@ public class FormularioAlunoActivity extends AppCompatActivity {
                 campoTelefoneCelular.setText(telefone.getNumero());
             }
         }
-        campoEmail.setText(aluno.getEmail());
     }
 
     private void finalizaFormulario() {
         preencheAluno();
-        if (checaCamposVazios()) {
-            Toast.makeText(FormularioAlunoActivity.this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
-        } else if (aluno.hasValidId()) {
+        Telefone telefoneFixo = criaTelefone(campoTelefoneFixo, TipoTelefone.FIXO);
+        Telefone telefoneCelular = criaTelefone(campoTelefoneCelular, TipoTelefone.CELULAR);
+        if (aluno.hasValidId()) {
             Toast.makeText(FormularioAlunoActivity.this, "Informações atualizadas!", Toast.LENGTH_SHORT).show();
-            alunoDAO.editaAluno(aluno);
-
-            String numeroFixo = campoTelefoneFixo.getText().toString();
-            Telefone telefoneFixo = new Telefone(numeroFixo, TipoTelefone.FIXO, aluno.getId());
-            String numeroCelular = campoTelefoneCelular.getText().toString();
-            Telefone telefoneCelular = new Telefone(numeroCelular, TipoTelefone.CELULAR, aluno.getId());
-            for (Telefone telefone : telefonesDoAluno) {
-                if (telefone.getTipo() == TipoTelefone.FIXO) {
-                    telefone.setId(telefoneFixo.getId());
-                } else {
-                    telefone.setId(telefoneCelular.getId());
-                }
-            }
-            telefoneDAO.editaTelefone(telefoneFixo, telefoneCelular);
-
-            finish();
+            editaAluno(telefoneFixo, telefoneCelular);
         } else {
             Toast.makeText(FormularioAlunoActivity.this, "Informações salvas!", Toast.LENGTH_SHORT).show();
-            int alunoId = alunoDAO.salvaAluno(aluno).intValue();
-            String numeroFixo = campoTelefoneFixo.getText().toString();
-            Telefone telefoneFixo = new Telefone(numeroFixo, TipoTelefone.FIXO, alunoId);
-            String numeroCelular = campoTelefoneCelular.getText().toString();
-            Telefone telefoneCelular = new Telefone(numeroCelular, TipoTelefone.CELULAR, alunoId);
-            telefoneDAO.salvaTelefone(telefoneFixo, telefoneCelular);
-
-            finish();
+            salvaAluno(telefoneFixo, telefoneCelular);
         }
+        finish();
+    }
+
+    private void editaAluno(Telefone telefoneFixo, Telefone telefoneCelular) {
+        alunoDAO.editaAluno(aluno);
+        vinculaAlunoTelefones(aluno.getId(), telefoneFixo, telefoneCelular);
+        atualizaTelefoneIDs(telefoneFixo, telefoneCelular);
+        telefoneDAO.editaTelefone(telefoneFixo, telefoneCelular);
+    }
+
+    private void salvaAluno(Telefone telefoneFixo, Telefone telefoneCelular) {
+        int alunoId = alunoDAO.salvaAluno(aluno).intValue();
+        vinculaAlunoTelefones(alunoId, telefoneFixo, telefoneCelular);
+        telefoneDAO.salvaTelefone(telefoneFixo, telefoneCelular);
+    }
+
+    private void atualizaTelefoneIDs(Telefone telefoneFixo, Telefone telefoneCelular) {
+        for (Telefone telefone : telefonesDoAluno) {
+            if (telefone.getTipo() == TipoTelefone.FIXO) {
+                telefoneFixo.setId(telefone.getId());
+            } else {
+                telefoneCelular.setId(telefone.getId());
+            }
+        }
+    }
+
+    private void vinculaAlunoTelefones(int alunoId, Telefone... telefones) {
+        for (Telefone telefone : telefones) {
+            telefone.setAlunoId(alunoId);
+        }
+    }
+
+    private Telefone criaTelefone(EditText campoTelefone, TipoTelefone tipo) {
+        String numero = campoTelefone.getText().toString();
+        return new Telefone(numero, tipo);
     }
 
     private void preencheAluno() {
@@ -137,12 +154,5 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         aluno.setNome(nome);
         aluno.setEmail(email);
-    }
-
-    private boolean checaCamposVazios() {
-        return campoNome.getText().toString().isEmpty()
-                || campoTelefoneFixo.getText().toString().isEmpty()
-                || campoTelefoneCelular.getText().toString().isEmpty()
-                || campoEmail.getText().toString().isEmpty();
     }
 }

@@ -18,10 +18,9 @@ public class Telefone {
             onUpdate = ForeignKey.CASCADE)
     private int alunoId;
 
-    public Telefone(String numero, TipoTelefone tipo, int alunoId) {
+    public Telefone(String numero, TipoTelefone tipo) {
         this.numero = numero;
         this.tipo = tipo;
-        this.alunoId = alunoId;
     }
 
     public int getAlunoId() {
