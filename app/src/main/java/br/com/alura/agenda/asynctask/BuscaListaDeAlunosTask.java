@@ -9,17 +9,17 @@ import br.com.alura.agenda.model.Aluno;
 import br.com.alura.agenda.ui.adapter.ListaAlunosAdapter;
 
 public class BuscaListaDeAlunosTask extends AsyncTask<Void, Void, List<Aluno>> {
+    private final RoomAlunoDAO alunoDAO;
     private final ListaAlunosAdapter adapter;
-    private final RoomAlunoDAO dao;
 
-    public BuscaListaDeAlunosTask(ListaAlunosAdapter adapter, RoomAlunoDAO dao) {
+    public BuscaListaDeAlunosTask(RoomAlunoDAO alunoDAO, ListaAlunosAdapter adapter) {
+        this.alunoDAO = alunoDAO;
         this.adapter = adapter;
-        this.dao = dao;
     }
 
     @Override
-    protected List<Aluno> doInBackground(Void[] objects) {
-        return dao.getListaDeAlunos();
+    protected List<Aluno> doInBackground(Void... objects) {
+        return alunoDAO.getListaDeAlunos();
     }
 
     @Override

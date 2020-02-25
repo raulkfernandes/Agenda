@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 
 import br.com.alura.agenda.asynctask.BuscaListaDeAlunosTask;
+import br.com.alura.agenda.asynctask.RemoveAlunoTask;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.RoomAlunoDAO;
 import br.com.alura.agenda.model.Aluno;
@@ -18,12 +19,12 @@ public class ListaAlunosBehaviour {
 
     private final Context mContext;
     private final ListaAlunosAdapter adapter;
-    private final RoomAlunoDAO dao;
+    private final RoomAlunoDAO alunoDAO;
 
     public ListaAlunosBehaviour(Context mContext) {
         this.mContext = mContext;
         this.adapter = new ListaAlunosAdapter(mContext);
-        this.dao = AgendaDatabase.getInstance(mContext).getRoomAlunoDAO();
+        this.alunoDAO = AgendaDatabase.getInstance(mContext).getRoomAlunoDAO();
     }
 
     public void confirmaRemoverAluno(@NonNull final MenuItem item) {
@@ -41,7 +42,7 @@ public class ListaAlunosBehaviour {
     }
 
     public void atualizaListaDeAlunos() {
-        new BuscaListaDeAlunosTask(adapter, dao).execute();
+        new BuscaListaDeAlunosTask(alunoDAO, adapter).execute();
     }
 
     public void configuraAdapter(ListView listaDeAlunos) {
@@ -49,7 +50,6 @@ public class ListaAlunosBehaviour {
     }
 
     private void removeAluno(Aluno aluno) {
-        dao.removeAluno(aluno);
-        adapter.remove(aluno);
+        new RemoveAlunoTask(alunoDAO, adapter, aluno).execute();
     }
 }
