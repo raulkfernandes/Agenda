@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
+import br.com.alura.agenda.asynctask.BuscaListaDeAlunosTask;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.RoomAlunoDAO;
 import br.com.alura.agenda.model.Aluno;
@@ -40,7 +41,7 @@ public class ListaAlunosBehaviour {
     }
 
     public void atualizaListaDeAlunos() {
-        adapter.atualiza(dao.getListaDeAlunos());
+        new BuscaListaDeAlunosTask(adapter, dao).execute();
     }
 
     public void configuraAdapter(ListView listaDeAlunos) {

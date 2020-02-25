@@ -64,10 +64,10 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
         viewHolder.setTextNome(aluno.getNome());
-        Telefone primeiroTelefone = telefoneDAO.buscaPrimeiroTelefone(aluno.getId());
-        if(primeiroTelefone != null) {
-            viewHolder.setTextTelefone(primeiroTelefone.getNumero());
-        }
+//        Telefone primeiroTelefone = telefoneDAO.buscaPrimeiroTelefone(aluno.getId());
+//        if(primeiroTelefone != null) {
+//            viewHolder.setTextTelefone(primeiroTelefone.getNumero());
+//        }
     }
 
     // Encapsulando métodos para que o adapter se encarregue dessas tarefas:

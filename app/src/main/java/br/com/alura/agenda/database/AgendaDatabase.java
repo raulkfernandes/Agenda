@@ -33,7 +33,7 @@ public abstract class AgendaDatabase extends RoomDatabase {
         if (instance == null) {
             instance = Room
                     .databaseBuilder(mContext, AgendaDatabase.class, DATABASE_NAME)
-                    .allowMainThreadQueries()
+                    //.allowMainThreadQueries()
                     //.fallbackToDestructiveMigration()
                     .addMigrations(ALL_MIGRATIONS)
                     .build();
