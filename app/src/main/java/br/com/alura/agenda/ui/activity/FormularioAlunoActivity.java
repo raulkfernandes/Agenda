@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import br.com.alura.agenda.R;
+import br.com.alura.agenda.asynctask.SalvaAlunoTask;
 import br.com.alura.agenda.database.AgendaDatabase;
 import br.com.alura.agenda.database.dao.RoomAlunoDAO;
 import br.com.alura.agenda.database.dao.RoomTelefoneDAO;
@@ -122,9 +123,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void salvaAluno(Telefone telefoneFixo, Telefone telefoneCelular) {
-        int alunoId = alunoDAO.salvaAluno(aluno).intValue();
-        vinculaAlunoTelefones(alunoId, telefoneFixo, telefoneCelular);
-        telefoneDAO.salvaTelefone(telefoneFixo, telefoneCelular);
+        new SalvaAlunoTask(alunoDAO, aluno, telefoneFixo, telefoneCelular, telefoneDAO, this::finish);
     }
 
     private void atualizaTelefoneIDs(Telefone telefoneFixo, Telefone telefoneCelular) {
