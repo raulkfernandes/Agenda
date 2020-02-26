@@ -116,7 +116,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             Toast.makeText(FormularioAlunoActivity.this, "Informações salvas!", Toast.LENGTH_SHORT).show();
             salvaAluno(telefoneFixo, telefoneCelular);
         }
-        finish();
     }
 
     private void editaAluno(Telefone telefoneFixo, Telefone telefoneCelular) {
