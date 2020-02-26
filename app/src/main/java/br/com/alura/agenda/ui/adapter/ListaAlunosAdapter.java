@@ -64,7 +64,8 @@ public class ListaAlunosAdapter extends BaseAdapter {
 
     private void vincula(ListaAlunosViewHolder viewHolder, Aluno aluno) {
         viewHolder.setTextNome(aluno.getNome());
-        new BuscaPrimeiroTelefoneTask(telefoneDAO, viewHolder, aluno.getId()).execute();
+        new BuscaPrimeiroTelefoneTask(telefoneDAO, aluno.getId(), telefoneEncontrado ->
+                viewHolder.setTextTelefone(telefoneEncontrado.getNumero())).execute();
     }
 
     // Encapsulando métodos para que o adapter se encarregue dessas tarefas:

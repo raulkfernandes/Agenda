@@ -4,17 +4,16 @@ import android.os.AsyncTask;
 
 import br.com.alura.agenda.database.dao.RoomTelefoneDAO;
 import br.com.alura.agenda.model.Telefone;
-import br.com.alura.agenda.ui.adapter.ListaAlunosViewHolder;
 
 public class BuscaPrimeiroTelefoneTask extends AsyncTask<Void, Void, Telefone> {
     private final RoomTelefoneDAO telefoneDAO;
-    private final ListaAlunosViewHolder viewHolder;
     private final int alunoId;
+    private final TelefoneEncontradoListener listener;
 
-    public BuscaPrimeiroTelefoneTask(RoomTelefoneDAO telefoneDAO, ListaAlunosViewHolder viewHolder, int alunoId) {
+    public BuscaPrimeiroTelefoneTask(RoomTelefoneDAO telefoneDAO, int alunoId, TelefoneEncontradoListener listener) {
         this.telefoneDAO = telefoneDAO;
-        this.viewHolder = viewHolder;
         this.alunoId = alunoId;
+        this.listener = listener;
     }
 
     @Override
@@ -23,10 +22,12 @@ public class BuscaPrimeiroTelefoneTask extends AsyncTask<Void, Void, Telefone> {
     }
 
     @Override
-    protected void onPostExecute(Telefone telefone) {
-        super.onPostExecute(telefone);
-        if (telefone != null) {
-            viewHolder.setTextTelefone(telefone.getNumero());
-        }
+    protected void onPostExecute(Telefone primeiroTelefone) {
+        super.onPostExecute(primeiroTelefone);
+        listener.quandoEncontrado(primeiroTelefone);
+    }
+
+    public interface TelefoneEncontradoListener {
+        void quandoEncontrado(Telefone telefoneEncontrado);
     }
 }
